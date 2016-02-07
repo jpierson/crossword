@@ -1,28 +1,27 @@
 
 
-function wordAddedReducer(state, action) {
-    return state.words.concat([action.word || ""]);
+function wordAddedReducer(words = [], action) {
+    return words.concat([action.word || ""]);
 }
     
-function wordRemovedReducer(state, action) {
-    state.words.filter(w => w !== action.word);
+function wordRemovedReducer(words = [], action) {
+    return words.filter(w => w !== action.word);
+    // return words.filter((_, index) => index !== action.index);     
 }
 
-function wordChangeReducer(state, action) {
-    this.state.words
-        .slice(0,action.index)
-        .concat([action.newWord])
-        .concat(this.state.words.slice(action.index + 1));        
+function wordChangeReducer(words = [], action) {
+    return words.map((word, index) => 
+        index === action.index ? action.newWord : word);     
 }
     
-function wordsReducer(state, action) {
+export default function wordsReducer(state, action) {
     switch(action.type) {
         case "WORD_ADDED":
-            return { ...state, words: wordAddedReducer(state, action) };
+            return { ...state, words: wordAddedReducer(state.words, action) };
         case "WORD_REMOVED":
-            return { ...state, words: wordRemovedReducer(state, action) };
+            return { ...state, words: wordRemovedReducer(state.words, action) };
         case "WORD_CHANGED":
-            return { ...state, words: wordChangeReducer(state, action) };
+            return { ...state, words: wordChangeReducer(state.words, action) };
         default:
             return state;
     }
