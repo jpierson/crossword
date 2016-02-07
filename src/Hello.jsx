@@ -1,5 +1,8 @@
 'use strict'
 var React = require('react')
+import wordsReducer from 'wordsReducer.js'
+
+
 module.exports = React.createClass({
     displayName: 'HelloReact',
     
@@ -13,20 +16,17 @@ module.exports = React.createClass({
     },
     
     addWord: function() {
-        this.setState({ words: this.state.words.concat([""]) });
+        this.setState(wordsReducer(this.state, { type: "WORD_ADDED" }));
     },
     
     removeWord: function(word) {
         console.log(`Removing word ${word}`);
-        this.setState({ words: this.state.words.filter(w => w !== word)});
+        this.setState(wordsReducer(this.state, { type: "WORD_ADDED", word }));        
     },
     
     onWordChange: function(i, newWord) {
-        this.setState({ words: 
-            this.state.words
-                .slice(0,i)
-                .concat([newWord])
-                .concat(this.state.words.slice(i+1))});        
+        this.setState(wordsReducer(this.state, { type: "WORD_CHANGED", index: i, newWord }));        
+             
     },
     
     render: function(){
@@ -34,7 +34,10 @@ module.exports = React.createClass({
             <ul>
                 {this.state.words && this.state.words.map((word, i) =>
                     <li key={i}>
-                        <input type="text" onChange={(e) => this.onWordChange(i, e.value)}></input>
+                        <input 
+                            type="text" 
+                            value={word}
+                            onChange={(e) => this.onWordChange(i, e.value)}></input>
                         <button onClick={() => this.removeWord(word)}>X</button>
                     </li>
                 )}
