@@ -5,7 +5,7 @@ import wordsReducer from './wordsReducer.js'
 
 
 module.exports = React.createClass({
-    displayName: 'HelloReact',
+    displayName: 'Game',
     
     getInitialState: function() {
         // naming it initialX clearly indicates that the only purpose

@@ -1,5 +1,5 @@
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
-var Hello = require('./Hello')
-ReactDOM.render(<Hello />, document.getElementById('content'))
+var Game = require('./Game')
+ReactDOM.render(<Game />, document.getElementById('content'))
