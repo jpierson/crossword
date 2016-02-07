@@ -1,6 +1,6 @@
 'use strict'
 var React = require('react')
-import wordsReducer from 'wordsReducer.js'
+import wordsReducer from './wordsReducer.js'
 
 
 module.exports = React.createClass({
@@ -16,6 +16,7 @@ module.exports = React.createClass({
     },
     
     addWord: function() {
+        console.log(`Adding word`);        
         this.setState(wordsReducer(this.state, { type: "WORD_ADDED" }));
     },
     
@@ -24,9 +25,10 @@ module.exports = React.createClass({
         this.setState(wordsReducer(this.state, { type: "WORD_ADDED", word }));        
     },
     
-    onWordChange: function(i, newWord) {
+    changeWord: function(i, newWord) {
+        console.log(`changing word ${word} at index ${i}`);
         this.setState(wordsReducer(this.state, { type: "WORD_CHANGED", index: i, newWord }));        
-             
+          
     },
     
     render: function(){
@@ -35,9 +37,10 @@ module.exports = React.createClass({
                 {this.state.words && this.state.words.map((word, i) =>
                     <li key={i}>
                         <input 
-                            type="text" 
+                            type="text"
                             value={word}
-                            onChange={(e) => this.onWordChange(i, e.value)}></input>
+                            onChange={(e) => this.changeWord(i, e.value)}></input>
+                        <div>{word}</div>
                         <button onClick={() => this.removeWord(word)}>X</button>
                     </li>
                 )}
